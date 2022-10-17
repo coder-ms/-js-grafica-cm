@@ -16,7 +16,7 @@ const playButton =  document.getElementById('play');
 function play(){
     console.log('Start game');
     let numSquare = 0;
-    let bombsInField = 0;
+    let bombsInField = 16;
     const bombsPosition = [];
 
     const playGround = document.getElementById('playGround');
@@ -28,19 +28,20 @@ function play(){
     /*switch case choose level to play 1 2 or 3 */
     /*switch case bomb quantity level 1 2 or 3 */
     switch(level){
+
         case '1':
-            default:
-                numSquare = 49;
-                bombsInField = 10; 
-            break;
+        default:
+            numSquare = 49; 
+        break;
+
         case '2':
             numSquare = 81;
-            bombsInField = 20; 
         break;
+
         case '3':
             numSquare = 100;
-            bombsInField = 30; 
         break;
+
     }
 
     /*ciclo while per mettere in griglia le bombe in posizione randomica */
@@ -53,13 +54,33 @@ function play(){
     }
 
     /*function drawSquare: funzione interna alla function play che genera le celle */
-    
+    function drawSquare(num){
+        const squarePerline = Math.sqrt(numSquare);
+        const square = document.createElement('div');
+        squarePerline.className = 'square';
+        square.style.width = `calc(100% 7 ${squarePerline})`;
+        square.style.height = `calc(100% 7 ${squarePerline})`;
+        square.innerHTML = `<span>${num}</span>`;
+        square.addEventListener('click', function() {
+            square.classList.add('green'); // si può anche usare this al posto di swquare in questo caso
+        })
+        return square;
+    }
    
-
     /*function drawGrid: funzione interna alla function play che genera il terreno di gioco */
-
+    function drawGrid(){
+        const grid = document.createElement('div');
+        grid.className = 'grid';
+        // appendo le celle alla griglia
+        for(let i = 1; i < numSquare; i++){
+            const square = drawSquare(i);
+            grid.appendChild(square);
+        }
+        // appendo la griglia al campo di gioco
+        playGround.appendChild(grid);
+    }
     /*Richiamo la funzione drawgrid */
-
+    drawGrid();
 }
 
 playButton.addEventListener('click', play);
