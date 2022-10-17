@@ -47,4 +47,5 @@ button{
 button:hover{
     color: rgb(30, 67, 152);
     background-color: white;
+    font-weight: bold;
 }
